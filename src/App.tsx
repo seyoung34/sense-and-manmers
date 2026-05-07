@@ -93,8 +93,16 @@ function App() {
       return;
     }
 
-    trackAnswerDraft(quiz, choiceId);
-    setDraftAnswers((current) => ({ ...current, [quiz.id]: choiceId }));
+    setDraftAnswers((current) => {
+      if (current[quiz.id] === choiceId) {
+        const next = { ...current };
+        delete next[quiz.id];
+        return next;
+      }
+
+      trackAnswerDraft(quiz, choiceId);
+      return { ...current, [quiz.id]: choiceId };
+    });
   };
 
   const submitAnswer = (quiz: Quiz) => {

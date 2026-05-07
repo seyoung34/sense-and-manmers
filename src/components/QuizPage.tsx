@@ -17,7 +17,7 @@ type QuizPageProps = {
   topic: Situation;
 };
 
-// 실제 문제 풀이 화면입니다. 판정 전에는 선택지를 바꿀 수 있고, 답 결정 후에는 선택을 잠급니다.
+// 실제 문제 풀이 화면입니다. 판정 전에는 선택지를 바꿀 수 있고, 같은 선택지를 다시 누르면 선택을 취소합니다.
 export function QuizPage({
   answers,
   currentIndex,
@@ -192,7 +192,7 @@ function StatusMessage({
     return (
       <p className="inline-flex items-center gap-2 font-bold text-emerald-700">
         <CheckCircle2 size={18} />
-        정답이에요.
+        센스있는 선택이에요.
       </p>
     );
   }
@@ -200,7 +200,7 @@ function StatusMessage({
   return (
     <p className="inline-flex items-center gap-2 font-bold text-rose-700">
       <XCircle size={18} />
-      오답이에요.
+      다른 선택지가 더 자연스러워요.
     </p>
   );
 }

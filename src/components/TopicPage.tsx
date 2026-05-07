@@ -55,13 +55,15 @@ export function TopicPage({
           })}
         </div>
 
-        <button
-          type="button"
-          onClick={onStartQuiz}
-          className="mt-4 inline-flex min-h-12 w-full items-center justify-center rounded-full bg-cta px-6 py-3 font-bold text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-cta focus:ring-offset-2 sm:mx-auto sm:max-w-sm"
-        >
-          문제 풀기
-        </button>
+        <div className="mt-4 flex justify-center">
+          <button
+            type="button"
+            onClick={onStartQuiz}
+            className="inline-flex min-h-12 w-full items-center justify-center rounded-full bg-cta px-6 py-3 font-bold text-white transition hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-cta focus:ring-offset-2 sm:max-w-sm"
+          >
+            문제 풀기
+          </button>
+        </div>
       </section>
     </div>
   );
