@@ -1,19 +1,10 @@
+import ReactGA from 'react-ga4';
 import type { Quiz, SituationId } from '../content/types';
 
 type EventProperties = Record<string, string | number | boolean | null>;
 
-declare global {
-  interface Window {
-    dataLayer?: unknown[];
-    gtag?: (
-      command: 'js' | 'config' | 'event',
-      targetId: string | Date,
-      config?: EventProperties,
-    ) => void;
-  }
-}
-
 const gaMeasurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
+let initialized = false;
 
 function toGaProperties(properties?: EventProperties) {
   const normalized = properties
@@ -34,33 +25,26 @@ function isGaDebugEnabled() {
   return new URLSearchParams(window.location.search).get('ga_debug') === '1';
 }
 
-// 앱 시작 시 GA4 웹 태그를 동적으로 붙입니다. 환경 변수가 없으면 로컬 개발처럼 추적 없이 동작합니다.
+// react-ga4로 GA4를 초기화합니다. 환경 변수가 없으면 로컬 개발처럼 추적 없이 동작합니다.
 export function initGa() {
-  if (!gaMeasurementId || window.gtag) {
+  if (!gaMeasurementId || initialized) {
     return;
   }
 
-  window.dataLayer = window.dataLayer ?? [];
-  window.gtag = function gtag(...args) {
-    window.dataLayer?.push(args);
-  };
-
-  window.gtag('js', new Date());
-  window.gtag('config', gaMeasurementId, {
-    send_page_view: true,
-    ...(isGaDebugEnabled() ? { debug_mode: true } : {}),
+  ReactGA.initialize(gaMeasurementId, {
+    gtagOptions: {
+      send_page_view: true,
+      transport_type: 'beacon',
+      ...(isGaDebugEnabled() ? { debug_mode: true } : {}),
+    },
   });
-
-  const script = document.createElement('script');
-  script.async = true;
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`;
-  document.head.appendChild(script);
+  initialized = true;
 }
 
 // GA4 커스텀 이벤트를 한 곳에서 관리합니다.
 function trackEvent(name: string, properties?: EventProperties) {
-  if (gaMeasurementId && window.gtag) {
-    window.gtag('event', name, toGaProperties(properties));
+  if (gaMeasurementId && initialized) {
+    ReactGA.event(name, toGaProperties(properties));
   }
 }
 
