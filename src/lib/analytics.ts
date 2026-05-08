@@ -16,16 +16,22 @@ declare global {
 const gaMeasurementId = import.meta.env.VITE_GA_MEASUREMENT_ID;
 
 function toGaProperties(properties?: EventProperties) {
-  if (!properties) {
-    return undefined;
-  }
+  const normalized = properties
+    ? Object.fromEntries(
+        Object.entries(properties).map(([key, value]) => [
+          key.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`),
+          value,
+        ]),
+      )
+    : {};
 
-  return Object.fromEntries(
-    Object.entries(properties).map(([key, value]) => [
-      key.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`),
-      value,
-    ]),
-  );
+  return isGaDebugEnabled()
+    ? { ...normalized, debug_mode: true }
+    : normalized;
+}
+
+function isGaDebugEnabled() {
+  return new URLSearchParams(window.location.search).get('ga_debug') === '1';
 }
 
 // 앱 시작 시 GA4 웹 태그를 동적으로 붙입니다. 환경 변수가 없으면 로컬 개발처럼 추적 없이 동작합니다.
@@ -47,6 +53,7 @@ export function initGa() {
   window.gtag('js', new Date());
   window.gtag('config', gaMeasurementId, {
     send_page_view: true,
+    ...(isGaDebugEnabled() ? { debug_mode: true } : {}),
   });
 }
 
