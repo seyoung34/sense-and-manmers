@@ -5,6 +5,7 @@ export type Situation = {
   title: string;
   summary: string;
   sensitivity: 'low' | 'medium' | 'high';
+  intent: string;
 };
 
 export type Quiz = {
@@ -17,6 +18,8 @@ export type Quiz = {
   answerId: string;
   explanation: string;
   note?: string;
+  sourceNote?: string;
+  difficulty?: 'easy' | 'medium' | 'hard';
   locale: 'ko';
 };
 

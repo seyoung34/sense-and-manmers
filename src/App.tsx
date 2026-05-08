@@ -14,6 +14,7 @@ import {
   trackExplanationClick,
   trackQuizComplete,
   trackQuizExit,
+  trackQuizNext,
   trackQuizStart,
   trackResultAction,
   trackStartClick,
@@ -42,6 +43,12 @@ function App() {
     () => getQuizzesBySituation(quizzes, selectedTopicId),
     [selectedTopicId],
   );
+  const quizCountsByTopic = useMemo(() => {
+    return situations.reduce<Record<SituationId, number>>((counts, situation) => {
+      counts[situation.id] = getQuizzesBySituation(quizzes, situation.id).length;
+      return counts;
+    }, {} as Record<SituationId, number>);
+  }, []);
   const activeQuiz = activeQuizzes[currentIndex];
   const correctCount = getCorrectCount(activeQuizzes, answers);
   const result = getResultForCorrectCount(correctCount);
@@ -93,6 +100,12 @@ function App() {
       return;
     }
 
+    const currentDraft = draftAnswers[quiz.id];
+
+    if (currentDraft !== choiceId) {
+      trackAnswerDraft(quiz, choiceId);
+    }
+
     setDraftAnswers((current) => {
       if (current[quiz.id] === choiceId) {
         const next = { ...current };
@@ -100,7 +113,6 @@ function App() {
         return next;
       }
 
-      trackAnswerDraft(quiz, choiceId);
       return { ...current, [quiz.id]: choiceId };
     });
   };
@@ -124,11 +136,12 @@ function App() {
       return;
     }
 
+    trackQuizNext(selectedTopicId, currentIndex + 1);
     setCurrentIndex((index) => index + 1);
   };
 
   return (
-    <main className="min-h-dvh bg-canvas text-ink">
+    <main className="min-h-dvh bg-[radial-gradient(circle_at_20%_10%,#dff3ff_0,transparent_32%),linear-gradient(135deg,#f7f7f2_0%,#f5f5f7_48%,#eef7f1_100%)] text-ink">
       <section className="mx-auto flex min-h-dvh w-full max-w-6xl flex-col px-4 py-3 sm:px-6 sm:py-4 lg:px-8">
         {step !== 'landing' && (
           <AppHeader onBack={handleBack} />
@@ -150,6 +163,7 @@ function App() {
               setSelectedTopicId(topicId);
             }}
             onStartQuiz={startQuiz}
+            quizCounts={quizCountsByTopic}
             selectedTopicId={selectedTopicId}
             topics={situations}
           />
@@ -163,7 +177,7 @@ function App() {
             onAnswer={selectAnswer}
             onNext={goNext}
             onReveal={(quizId) =>
-              setRevealed((current) => {
+              {
                 const quizToReveal = activeQuizzes.find(
                   (item) => item.id === quizId,
                 );
@@ -171,15 +185,15 @@ function App() {
                   ? answers[quizToReveal.id]
                   : undefined;
 
-                if (quizToReveal) {
+                if (quizToReveal && !revealed[quizId]) {
                   trackExplanationClick(
                     quizToReveal,
                     submittedAnswer === quizToReveal.answerId,
                   );
                 }
 
-                return { ...current, [quizId]: true };
-              })
+                setRevealed((current) => ({ ...current, [quizId]: true }));
+              }
             }
             onSubmitAnswer={submitAnswer}
             quiz={activeQuiz}

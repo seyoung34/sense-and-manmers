@@ -23,20 +23,22 @@ export function ResultPage({
 }: ResultPageProps) {
   return (
     <div className="mx-auto grid w-full max-w-3xl flex-1 content-center py-3 sm:py-4">
-      <section className="rounded-[8px] bg-white p-5 text-center shadow-soft ring-1 ring-black/5 sm:p-8">
-        <div className="mx-auto mb-4 inline-flex h-14 w-14 items-center justify-center rounded-full bg-blue-50 text-cta sm:mb-5">
-          <Sparkles size={26} />
+      <section className="rounded-[8px] bg-white p-5 shadow-soft ring-1 ring-black/5 sm:p-8">
+        <div className="text-center">
+          <div className="mx-auto mb-4 inline-flex h-14 w-14 items-center justify-center rounded-full bg-blue-50 text-cta sm:mb-5">
+            <Sparkles size={26} />
+          </div>
+          <p className="text-sm font-bold text-muted">{topic.title} 결과</p>
+          <h2 className="mt-3 text-3xl font-black leading-tight tracking-normal sm:text-5xl">
+            {resultTitle}
+          </h2>
+          <p className="mt-4 text-5xl font-black text-cta">
+            {correctCount}/{totalCount}
+          </p>
+          <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-muted sm:text-lg sm:leading-8">
+            {resultMessage}
+          </p>
         </div>
-        <p className="text-sm font-bold text-muted">{topic.title} 결과</p>
-        <h2 className="mt-3 text-3xl font-black leading-tight tracking-normal sm:text-5xl">
-          {resultTitle}
-        </h2>
-        <p className="mt-4 text-5xl font-black text-cta">
-          {correctCount}/{totalCount}
-        </p>
-        <p className="mx-auto mt-5 max-w-xl text-base leading-7 text-muted sm:text-lg sm:leading-8">
-          {resultMessage}
-        </p>
 
         <div className="mt-6 grid grid-cols-2 gap-2">
           <button

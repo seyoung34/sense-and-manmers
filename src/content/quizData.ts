@@ -6,24 +6,28 @@ export const situations: Situation[] = [
     title: '장례식장',
     summary: '조문 인사, 복장, 현장 태도처럼 조심스러운 순간을 다뤄요.',
     sensitivity: 'high',
+    intent: '말을 줄이고 차분한 태도를 익히는 연습',
   },
   {
     id: 'work',
     title: '회사 생활',
     summary: '메신저, 회의, 보고 상황에서 자연스러운 표현을 익혀요.',
     sensitivity: 'low',
+    intent: '상대가 바로 판단할 수 있게 말하는 연습',
   },
   {
     id: 'dining',
     title: '식사 예절',
     summary: '자리, 식사 시작, 계산 상황처럼 자주 헷갈리는 순간을 확인해요.',
     sensitivity: 'medium',
+    intent: '함께 먹는 자리에서 부담을 줄이는 연습',
   },
   {
     id: 'drinking',
     title: '술자리 예절',
     summary: '건배, 권유 거절, 마무리 인사처럼 부담을 줄이는 행동을 살펴요.',
     sensitivity: 'medium',
+    intent: '분위기는 맞추되 선을 지키는 연습',
   },
 ];
 
@@ -81,6 +85,46 @@ export const quizzes: Quiz[] = [
     answerId: 'B',
     explanation:
       '장례식장에서는 조용한 분위기를 해치지 않는 것이 좋아요. 급한 연락이 있으면 무음으로 바꾸고 밖에서 짧게 처리하면 자연스러워요.',
+    locale: 'ko',
+  },
+  {
+    id: 'funeral-envelope-001',
+    situationId: 'funeral',
+    title: '부의금을 전달할 때 가장 자연스러운 태도는?',
+    prompt:
+      '빈소에 도착해 조문을 하려는 상황이에요. 부의금을 전달할 때 가장 무난한 행동은 무엇일까요?',
+    layoutType: 'scenario',
+    choices: [
+      { id: 'A', label: '봉투를 크게 흔들며 금액을 말해요.' },
+      { id: 'B', label: '조용히 접수대나 정해진 장소에 전달해요.' },
+      { id: 'C', label: '유가족에게 금액이 적지 않은지 물어봐요.' },
+      { id: 'D', label: '사람들이 보는 앞에서 봉투를 열어 확인해요.' },
+    ],
+    answerId: 'B',
+    explanation:
+      '부의금은 드러내기보다 조용히 전달하는 편이 자연스러워요. 금액을 언급하거나 비교하는 말은 유가족에게 부담을 줄 수 있어요.',
+    sourceNote: '일반 조문 예절과 장례식장 현장 관행을 기준으로 구성했어요.',
+    difficulty: 'easy',
+    locale: 'ko',
+  },
+  {
+    id: 'funeral-meal-001',
+    situationId: 'funeral',
+    title: '조문 후 식사 자리에서는 어떻게 행동할까요?',
+    prompt:
+      '조문을 마친 뒤 식사 공간에 앉았어요. 지인들과 대화하게 되었을 때 가장 조심스러운 태도는 무엇일까요?',
+    layoutType: 'scenario',
+    choices: [
+      { id: 'A', label: '큰 소리로 웃고 오래 떠들어요.' },
+      { id: 'B', label: '밝은 농담으로 분위기를 띄워요.' },
+      { id: 'C', label: '낮은 목소리로 짧게 대화하고 오래 머물지 않아요.' },
+      { id: 'D', label: '상주에게 계속 술을 권해요.' },
+    ],
+    answerId: 'C',
+    explanation:
+      '장례식장 식사 공간도 조문 분위기의 일부예요. 오래 머물며 소란스럽게 대화하기보다 차분하게 머무는 편이 무난해요.',
+    sourceNote: '현장 분위기와 유가족의 피로도를 고려한 일반 예절 기준이에요.',
+    difficulty: 'medium',
     locale: 'ko',
   },
   {
@@ -147,6 +191,49 @@ export const quizzes: Quiz[] = [
     locale: 'ko',
   },
   {
+    id: 'work-delay-001',
+    situationId: 'work',
+    title: '마감이 늦어질 것 같을 때는 언제 말할까요?',
+    prompt:
+      '오늘 오전까지 보내기로 한 자료가 늦어질 것 같아요. 가장 신뢰를 덜 잃는 대응은 무엇일까요?',
+    layoutType: 'scenario',
+    choices: [
+      { id: 'A', label: '마감 시간이 지나고 나서야 말해요.' },
+      { id: 'B', label: '상대가 물어볼 때까지 기다려요.' },
+      {
+        id: 'C',
+        label: '늦어질 가능성을 알게 된 시점에 바로 공유하고 새 시간을 제안해요.',
+      },
+      { id: 'D', label: '일단 아무 자료나 보내고 나중에 고쳐요.' },
+    ],
+    answerId: 'C',
+    explanation:
+      '지연은 숨기는 것보다 빠르게 알리는 편이 좋아요. 현재 상태와 새 공유 시간을 함께 말하면 상대가 다음 일정을 조정하기 쉬워요.',
+    sourceNote: '업무 커뮤니케이션의 기본 원칙인 선공유와 일정 재조정을 기준으로 구성했어요.',
+    difficulty: 'medium',
+    locale: 'ko',
+  },
+  {
+    id: 'work-feedback-001',
+    situationId: 'work',
+    title: '피드백을 받았을 때 첫 반응은?',
+    prompt:
+      '작성한 문서에 대해 선배가 수정 의견을 많이 줬어요. 가장 자연스러운 첫 반응은 무엇일까요?',
+    layoutType: 'text',
+    choices: [
+      { id: 'A', label: '그건 제 방식이 아닌데요.' },
+      { id: 'B', label: '확인해보겠습니다. 특히 우선 수정하면 좋을 부분이 있을까요?' },
+      { id: 'C', label: '왜 이제 말하세요?' },
+      { id: 'D', label: '다시 하라는 뜻인가요?' },
+    ],
+    answerId: 'B',
+    explanation:
+      '피드백을 받을 때는 방어적으로 반응하기보다 확인 의사를 먼저 보이고 우선순위를 물으면 좋아요. 수정 방향이 더 분명해져요.',
+    sourceNote: '실무 협업에서 피드백을 행동으로 바꾸는 커뮤니케이션 기준이에요.',
+    difficulty: 'medium',
+    locale: 'ko',
+  },
+  {
     id: 'dining-seat-001',
     situationId: 'dining',
     title: '식사 자리에서 어디가 상석일까요?',
@@ -199,6 +286,47 @@ export const quizzes: Quiz[] = [
     answerId: 'B',
     explanation:
       '상대가 계산하더라도 감사 인사를 분명히 하고 다음 기회를 언급하면 자연스러워요. 관계에 따라 실제로 다음에 커피나 식사를 챙기는 것도 좋아요.',
+    locale: 'ko',
+  },
+  {
+    id: 'dining-menu-001',
+    situationId: 'dining',
+    title: '메뉴를 고를 때 가장 배려 있는 방식은?',
+    prompt:
+      '여러 명이 함께 식사할 메뉴를 고르는 중이에요. 가장 자연스러운 행동은 무엇일까요?',
+    layoutType: 'scenario',
+    choices: [
+      { id: 'A', label: '내가 먹고 싶은 메뉴로 바로 주문해요.' },
+      { id: 'B', label: '못 먹는 음식이나 선호를 먼저 짧게 확인해요.' },
+      { id: 'C', label: '제일 비싼 메뉴를 골라요.' },
+      { id: 'D', label: '아무거나요라고만 말하고 결정은 피해요.' },
+    ],
+    answerId: 'B',
+    explanation:
+      '함께 먹는 자리에서는 알레르기, 종교, 컨디션, 취향처럼 먹기 어려운 요소를 먼저 확인하면 좋아요. 모두가 편한 선택지를 찾기 쉬워져요.',
+    note: '상대가 결정하기 어려워하면 2~3개 선택지를 제안하는 것도 자연스러워요.',
+    sourceNote: '식사 자리 배려와 호스트 매너 기준을 반영했어요.',
+    difficulty: 'easy',
+    locale: 'ko',
+  },
+  {
+    id: 'dining-shared-dish-001',
+    situationId: 'dining',
+    title: '공용 음식을 덜어 먹을 때는?',
+    prompt:
+      '찌개나 반찬처럼 함께 먹는 음식이 나왔어요. 가장 무난한 행동은 무엇일까요?',
+    layoutType: 'scenario',
+    choices: [
+      { id: 'A', label: '내 숟가락으로 바로 여러 번 떠 먹어요.' },
+      { id: 'B', label: '공용 집게나 국자를 사용해 개인 접시에 덜어요.' },
+      { id: 'C', label: '가장 맛있는 부분만 먼저 가져가요.' },
+      { id: 'D', label: '상대 접시에 말없이 음식을 올려줘요.' },
+    ],
+    answerId: 'B',
+    explanation:
+      '공용 음식은 집게, 국자, 개인 접시를 쓰면 위생과 배려를 모두 챙길 수 있어요. 상대에게 음식을 권할 때도 먼저 물어보는 편이 좋아요.',
+    sourceNote: '공용 식사 위생과 현대 식사 예절을 기준으로 구성했어요.',
+    difficulty: 'easy',
     locale: 'ko',
   },
   {
@@ -258,34 +386,74 @@ export const quizzes: Quiz[] = [
       '먼저 일어날 때는 이유를 짧게 말하고 자리 감사 인사를 함께 전하면 자연스러워요. 분위기를 끊지 않게 조용히 인사하는 것도 좋아요.',
     locale: 'ko',
   },
+  {
+    id: 'drinking-pressure-001',
+    situationId: 'drinking',
+    title: '다른 사람이 술을 거절했을 때는?',
+    prompt:
+      '옆자리 동료가 술을 마시지 않겠다고 했어요. 가장 자연스러운 반응은 무엇일까요?',
+    layoutType: 'scenario',
+    choices: [
+      { id: 'A', label: '분위기 깨지 말고 한 잔만 하라고 말해요.' },
+      { id: 'B', label: '알겠습니다. 음료나 물 필요하시면 말씀해주세요.' },
+      { id: 'C', label: '왜 못 마시는지 계속 물어봐요.' },
+      { id: 'D', label: '술자리 올 필요 없다고 말해요.' },
+    ],
+    answerId: 'B',
+    explanation:
+      '술을 마시지 않는 선택은 존중받아야 해요. 이유를 캐묻거나 압박하기보다 함께 자리할 수 있게 대안을 챙기는 편이 자연스러워요.',
+    sourceNote: '음주 강요를 피하고 개인 선택을 존중하는 현대 회식 문화 기준이에요.',
+    difficulty: 'easy',
+    locale: 'ko',
+  },
+  {
+    id: 'drinking-bill-001',
+    situationId: 'drinking',
+    title: '술자리 계산 후 감사 인사는 어떻게 할까요?',
+    prompt:
+      '선배가 술자리 계산을 했어요. 다음 날 가장 자연스러운 행동은 무엇일까요?',
+    layoutType: 'scenario',
+    choices: [
+      { id: 'A', label: '아무 말 없이 넘어가요.' },
+      { id: 'B', label: '어제 잘 먹었습니다. 다음에 커피는 제가 챙기겠습니다.' },
+      { id: 'C', label: '어제 너무 많이 쓰신 것 아닌가요?' },
+      { id: 'D', label: '다음에도 부탁드립니다.' },
+    ],
+    answerId: 'B',
+    explanation:
+      '계산을 받은 뒤에는 짧은 감사 인사를 남기면 좋아요. 관계가 이어지는 자리라면 다음에 작은 보답을 언급하는 것도 자연스러워요.',
+    sourceNote: '회식 후속 커뮤니케이션과 관계 유지 매너를 기준으로 구성했어요.',
+    difficulty: 'medium',
+    locale: 'ko',
+  },
 ];
 
 export const quizResults: QuizResult[] = [
   {
     id: 'all-clear',
-    minCorrect: 3,
-    maxCorrect: 3,
-    title: '분위기를 잘 읽는 편이에요',
+    minCorrect: 5,
+    maxCorrect: 5,
+    title: '분위기를 먼저 읽는 타입이에요',
     message:
-      '세 문제 모두 자연스러운 선택을 했어요. 낯선 자리에서도 상대가 편한 방향을 먼저 떠올리는 감각이 있어요.',
+      '다섯 문제 모두 자연스러운 선택을 했어요. 낯선 자리에서도 상대가 편한 방향과 현장 분위기를 함께 떠올리는 감각이 있어요.',
     tone: 'praise',
   },
   {
     id: 'almost',
-    minCorrect: 2,
-    maxCorrect: 2,
-    title: '조금만 더 보면 충분해요',
+    minCorrect: 3,
+    maxCorrect: 4,
+    title: '대부분 무난하게 판단해요',
     message:
-      '대부분의 흐름은 잘 잡았어요. 헷갈린 문제의 해설을 보면 다음 비슷한 상황에서 더 편하게 판단할 수 있어요.',
+      '큰 흐름은 잘 잡았어요. 헷갈린 문제의 해설을 보면 비슷한 상황에서 더 빠르게 판단할 수 있어요.',
     tone: 'encourage',
   },
   {
     id: 'starter',
     minCorrect: 0,
-    maxCorrect: 1,
-    title: '지금부터 익히면 충분해요',
+    maxCorrect: 2,
+    title: '상황 기준을 익히는 중이에요',
     message:
-      '아직 낯선 상황이 있었어요. 괜찮아요. 예절은 외우는 것보다 상황을 하나씩 겪으며 익히는 쪽에 가까워요.',
+      '아직 낯선 상황이 있었어요. 예절은 외우는 것보다 상황을 하나씩 비교하며 익히는 쪽에 가까워요. 해설을 보면 다음 선택이 더 쉬워질 거예요.',
     tone: 'guide',
   },
 ];

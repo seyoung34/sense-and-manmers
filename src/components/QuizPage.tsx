@@ -41,7 +41,7 @@ export function QuizPage({
   const isLastQuestion = currentIndex === topicQuizzes.length - 1;
 
   return (
-    <div className="mx-auto grid w-full max-w-5xl flex-1 content-center py-3 sm:py-4">
+    <div className="mx-auto grid w-full max-w-6xl flex-1 content-center py-3 sm:py-4">
       <section className="rounded-[8px] bg-white p-4 shadow-soft ring-1 ring-black/5 sm:p-5 lg:p-6">
         <div className="mb-4 flex items-center justify-between gap-4 sm:mb-5">
           <div>
@@ -68,8 +68,8 @@ export function QuizPage({
           </div>
         </div>
 
-        <div className="grid gap-5 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-          <div>
+        <div className="grid gap-5 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
+          <div className="rounded-[8px] bg-canvas p-4 sm:p-5">
             <h2 className="text-2xl font-black leading-tight tracking-normal sm:text-4xl">
               {quiz.title}
             </h2>
@@ -92,6 +92,7 @@ export function QuizPage({
                     key={choice.id}
                     type="button"
                     disabled={isSubmitted}
+                    aria-pressed={selected}
                     onClick={() => onAnswer(quiz, choice.id)}
                     className={[
                       'min-h-14 rounded-[8px] border px-4 py-3 text-left transition focus:outline-none focus:ring-2 focus:ring-cta focus:ring-offset-2',
@@ -135,7 +136,7 @@ export function QuizPage({
                       className="inline-flex min-h-11 items-center justify-center gap-2 rounded-full bg-ink px-3 py-2 text-sm font-bold text-white transition hover:bg-black focus:outline-none focus:ring-2 focus:ring-cta focus:ring-offset-2 focus:ring-offset-canvas"
                     >
                       <Lightbulb size={17} />
-                      해설
+                      해설 보기
                     </button>
                     <button
                       type="button"
@@ -161,6 +162,11 @@ export function QuizPage({
                 <div className="mt-4 border-t border-line pt-4 text-sm leading-7 text-muted">
                   <p>{quiz.explanation}</p>
                   {quiz.note && <p className="mt-2">참고: {quiz.note}</p>}
+                  {quiz.sourceNote && (
+                    <p className="mt-2 text-xs leading-6 text-muted">
+                      기준: {quiz.sourceNote}
+                    </p>
+                  )}
                 </div>
               )}
             </div>

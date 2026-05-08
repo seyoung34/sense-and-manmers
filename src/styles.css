@@ -35,3 +35,31 @@ body {
 button {
   font: inherit;
 }
+
+.title-bounce {
+  animation: title-bounce 3.8s cubic-bezier(0.2, 0.9, 0.2, 1) infinite;
+  transform-origin: 50% 80%;
+  will-change: transform;
+}
+
+@keyframes title-bounce {
+  0%,
+  18%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  7% {
+    transform: translateY(-0.18em) scale(1.04);
+  }
+
+  12% {
+    transform: translateY(0.04em) scale(0.98);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .title-bounce {
+    animation: none;
+  }
+}

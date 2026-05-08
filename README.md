@@ -9,6 +9,16 @@ Web MVP for `센스있게, 예의있게`.
 - TypeScript
 - Tailwind CSS
 
+## Analytics
+
+GA4 이벤트 수집은 `VITE_GA_MEASUREMENT_ID` 환경 변수가 있을 때만 활성화됩니다.
+
+```env
+VITE_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+```
+
+Vercel 배포에서는 Project Settings > Environment Variables에 같은 값을 등록합니다.
+
 This codebase should stay separate from the Obsidian Vault. The vault keeps planning, product notes, and decisions. This folder keeps implementation files.
 
 ## Source of truth
