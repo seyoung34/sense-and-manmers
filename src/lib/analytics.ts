@@ -40,11 +40,6 @@ export function initGa() {
     return;
   }
 
-  const script = document.createElement('script');
-  script.async = true;
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`;
-  document.head.appendChild(script);
-
   window.dataLayer = window.dataLayer ?? [];
   window.gtag = function gtag(...args) {
     window.dataLayer?.push(args);
@@ -55,6 +50,11 @@ export function initGa() {
     send_page_view: true,
     ...(isGaDebugEnabled() ? { debug_mode: true } : {}),
   });
+
+  const script = document.createElement('script');
+  script.async = true;
+  script.src = `https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`;
+  document.head.appendChild(script);
 }
 
 // GA4 커스텀 이벤트를 한 곳에서 관리합니다.
