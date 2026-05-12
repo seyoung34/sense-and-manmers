@@ -1,6 +1,8 @@
 node_modules
 dist
 docs/
+.granite/
+*.ait
 .env
 .env.*
 .DS_Store
