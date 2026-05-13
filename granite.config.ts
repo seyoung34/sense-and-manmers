@@ -5,8 +5,7 @@ export default defineConfig({
   brand: {
     displayName: '센스있게, 매너있게',
     primaryColor: '#0071E3',
-    // 앱인토스 콘솔에서 아이콘을 업로드한 뒤 복사한 URL로 교체하세요.
-    icon: 'https://sense-and-manmers.vercel.app/favicon.svg',
+    icon: 'https://sense-and-manmers.vercel.app/app-logo.png',
   },
   web: {
     host: 'localhost',

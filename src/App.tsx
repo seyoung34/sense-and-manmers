@@ -1,7 +1,7 @@
-import { useMemo, useState } from 'react';
+import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from 'react';
+import { graniteEvent } from '@apps-in-toss/web-framework';
 import type { AnswerMap, AppStep, RevealedMap } from './app/flowTypes';
 import { AppHeader } from './components/AppHeader';
-import { ExitConfirmDialog } from './components/ExitConfirmDialog';
 import { LandingPage } from './components/LandingPage';
 import { QuizPage } from './components/QuizPage';
 import { ResultPage } from './components/ResultPage';
@@ -25,6 +25,12 @@ import {
   getQuizzesBySituation,
   getResultForCorrectCount,
 } from './lib/quiz';
+
+const ExitConfirmDialog = lazy(() =>
+  import('./components/ExitConfirmDialog').then((module) => ({
+    default: module.ExitConfirmDialog,
+  })),
+);
 
 // 앱 전체의 화면 전환과 퀴즈 진행 상태를 조율하는 최상위 컨테이너입니다.
 function App() {
@@ -79,7 +85,7 @@ function App() {
     setStep('topic');
   };
 
-  const handleBack = () => {
+  const handleBack = useCallback(() => {
     if (step === 'quiz') {
       setShowExitConfirm(true);
       return;
@@ -91,9 +97,24 @@ function App() {
     }
 
     if (step === 'result') {
-      goTopic();
+      resetQuizState();
+      setStep('topic');
     }
-  };
+  }, [step]);
+
+  useEffect(() => {
+    if (step === 'landing') {
+      return;
+    }
+
+    try {
+      return graniteEvent.addEventListener('backEvent', {
+        onEvent: handleBack,
+      });
+    } catch {
+      return;
+    }
+  }, [handleBack, step]);
 
   const selectAnswer = (quiz: Quiz, choiceId: string) => {
     if (answers[quiz.id]) {
@@ -220,13 +241,15 @@ function App() {
       </section>
 
       {showExitConfirm && (
-        <ExitConfirmDialog
-          onCancel={() => setShowExitConfirm(false)}
-          onConfirm={() => {
-            trackQuizExit(selectedTopicId, Object.keys(answers).length);
-            goTopic();
-          }}
-        />
+        <Suspense fallback={null}>
+          <ExitConfirmDialog
+            onCancel={() => setShowExitConfirm(false)}
+            onConfirm={() => {
+              trackQuizExit(selectedTopicId, Object.keys(answers).length);
+              goTopic();
+            }}
+          />
+        </Suspense>
       )}
     </main>
   );

@@ -4,7 +4,7 @@ type AppHeaderProps = {
   onBack: () => void;
 };
 
-// 첫 화면 이후에만 노출되는 간단한 상단 영역입니다.
+// 랜딩 이후 화면에서 현재 퀴즈 흐름과 뒤로가기 동작을 보여주는 상단 영역입니다.
 export function AppHeader({ onBack }: AppHeaderProps) {
   return (
     <header className="flex min-h-11 shrink-0 items-center gap-3 py-2 sm:min-h-12">
