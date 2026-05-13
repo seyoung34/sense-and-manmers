@@ -1,7 +1,6 @@
 import { lazy, Suspense, useCallback, useEffect, useMemo, useState } from 'react';
 import { graniteEvent } from '@apps-in-toss/web-framework';
 import type { AnswerMap, AppStep, RevealedMap } from './app/flowTypes';
-import { AppHeader } from './components/AppHeader';
 import { LandingPage } from './components/LandingPage';
 import { QuizPage } from './components/QuizPage';
 import { ResultPage } from './components/ResultPage';
@@ -164,10 +163,6 @@ function App() {
   return (
     <main className="min-h-dvh bg-[radial-gradient(circle_at_20%_10%,#dff3ff_0,transparent_32%),linear-gradient(135deg,#f7f7f2_0%,#f5f5f7_48%,#eef7f1_100%)] text-ink">
       <section className="mx-auto flex min-h-dvh w-full max-w-6xl flex-col px-4 py-3 sm:px-6 sm:py-4 lg:px-8">
-        {step !== 'landing' && (
-          <AppHeader onBack={handleBack} />
-        )}
-
         {step === 'landing' && (
           <LandingPage
             onStart={() => {
